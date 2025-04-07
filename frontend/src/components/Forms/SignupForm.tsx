@@ -7,7 +7,7 @@ const SignupForm = () =>
             <form className='form'>
                 <h1 className='form__header'>Sign up</h1>
                 
-                <div>
+                <div style={{display: 'flex', gap: 20}}>
                     <input className='form__field' type="text" placeholder="Name" />
                     <input className='form__field' type="text" placeholder="Username" />
                 </div>

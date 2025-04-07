@@ -1,15 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Nunito', sans-serif;
+}
+
+btn {
+    border: 1px solid #dadce0;
 }
 
 body {
     background-color: #c9d6ff;
-    background: linear-gradient(to right, #7F7FD5, #86A8E7, #91EAE4);
+    background: linear-gradient(to right, #7F7FD5, #86A8E7);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,16 +24,15 @@ body {
     display: flex;
     background-color: #fff;
     border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(105, 94, 167, 0.35);
     position: relative;
     width: 75vw;
-    height: 55vh;
+    height: 60vh;
 }
 
 /* FORM STYLES */
 
 .form__header {
-    font-size: 24px;
+    font-size: 2rem;
     margin-bottom: 20px;
   }
 
@@ -73,7 +76,7 @@ body {
     border: none;
     margin: 8px 0;
     padding: 10px 15px;
-    font-size: 13px;
+    font-size: 1rem;
     border-radius: 8px;
     width: 100%;
     outline: none;
@@ -83,13 +86,21 @@ body {
     background-color: #86A8E7;
     color: #fff;
     font-size: 12px;
-    padding: 10px 45px;
+    padding: 10px 40px;
+    margin: 5px 0px;
     border: 1px solid transparent;
     border-radius: 8px;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     cursor: pointer;
+}
+
+.form__terms {
+    color:rgb(207, 207, 207);
+    font-size: 12px;
+    text-align: center;
+    margin: 0 10px;
 }
 
 button .hidden {
@@ -103,6 +114,7 @@ button .hidden {
     font-size: 30px;
     display: flex;
     align-items: center;
+    margin: 10px 0;
 }
 
 .form__divider::before, .form__divider::after {
@@ -110,21 +122,16 @@ button .hidden {
     content: '';
     padding: 0.5px;
     background-color: rgb(207, 207, 207);
-    width: 100px;
+    width: 120px;
 }
 
 .form__divider span {
     position: relative;
-    padding: 0 10px; /* Space around the "OR" */
+    padding: 0 10px;
     color:rgb(207, 207, 207);
-    background-color: white; /* Match the background color of the form */
-    z-index: 1; /* Ensure the text is above the line */
+    background-color: white;
     font-size: 16px;
     font-weight: 500;
-  }
-
-.splash-page.active .signup-form{
-
 }
 
 @keyframes move{
@@ -138,8 +145,20 @@ button .hidden {
     }
 }
 
-.social-icons {
-    margin: 20px 0;
+.form__social-icons {
+    display: flex;
+    gap: 35px;
+    margin-bottom: 20px;
+
+}
+
+.form__icon {
+    flex-grow: 1;
+    display: flex;
+    gap: 5px;
+    font-size: 12px;
+    border: 1px solid #dadce0;
+    
 }
 
 /* .social-icons a {
@@ -172,9 +191,8 @@ button .hidden {
 }
 
 .toggle {
-    background-color: #2da0a8;
     height: 100%;
-    background: linear-gradient(to right, #7F7FD5, #86A8E7);
+    background: linear-gradient(to right, #9fbdf0, #b6c0ed, #9fbdf0, #b6c0ed);
     color: #fff;
     position: relative;
     left: -100%;
@@ -184,9 +202,24 @@ button .hidden {
     transition: all 0.6s ease-in-out;
 }
 
+.toggle p {
+    opacity: 0.7;
+}
+
 .toggle__btn {
-    background-color: #6a6ab2;
-    color: #fff
+    font-size: 12px;
+    padding: 10px 40px;
+    margin: 15px 0px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    
+    background-color: #86A8E7;
+    ;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
 .splash-page.active .toggle{
