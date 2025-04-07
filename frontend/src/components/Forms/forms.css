@@ -14,7 +14,6 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* height: fit-content; */
 }
 
 .splash-page {
@@ -23,15 +22,22 @@ body {
     border-radius: 30px;
     box-shadow: 0 5px 15px rgba(105, 94, 167, 0.35);
     position: relative;
-    /* overflow: hidden; */
     width: 75vw;
     height: 55vh;
 }
 
 /* FORM STYLES */
 
+.form__header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
 .splash-page__forms {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 
@@ -41,15 +47,18 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 30px;
+    gap: 5px;
 }
 
 .form {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    width: 100%;
-
+    align-items: center;
+    width: clamp(100%, 100%, 500px);
+    height: max-content;
+    gap: 5px;
 }
 
 .form__password-container {
@@ -89,7 +98,30 @@ button .hidden {
 }
 
 
+/* FORM DIVIDER STYLES */
+.form__divider {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+}
 
+.form__divider::before, .form__divider::after {
+    flex: 1;
+    content: '';
+    padding: 0.5px;
+    background-color: rgb(207, 207, 207);
+    width: 100px;
+}
+
+.form__divider span {
+    position: relative;
+    padding: 0 10px; /* Space around the "OR" */
+    color:rgb(207, 207, 207);
+    background-color: white; /* Match the background color of the form */
+    z-index: 1; /* Ensure the text is above the line */
+    font-size: 16px;
+    font-weight: 500;
+  }
 
 .splash-page.active .signup-form{
 

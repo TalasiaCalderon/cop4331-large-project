@@ -23,7 +23,9 @@ const SignupForm = () =>
                 <p className='form__error-status'></p>
             </form>
 
-            <p className='form__divider'> OR </p>
+            <p className="form__divider">
+                <span>OR</span>
+            </p>
 
             <div className="form__social-icons">
                 <button className="form__icon">
