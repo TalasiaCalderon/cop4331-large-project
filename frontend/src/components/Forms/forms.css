@@ -14,48 +14,49 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 100vh;
+    /* height: fit-content; */
 }
 
 .splash-page {
+    display: flex;
     background-color: #fff;
     border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 5px 15px rgba(105, 94, 167, 0.35);
     position: relative;
-    overflow: hidden;
-    width: 768px;
-    max-width: 100%;
-    min-height: 480px;
+    /* overflow: hidden; */
+    width: 75vw;
+    height: 55vh;
 }
 
-.form__submit-btn {
-    background-color: #2da0a8;
-    color: #fff;
-    font-size: 12px;
-    padding: 10px 45px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    cursor: pointer;
+/* FORM STYLES */
+
+.splash-page__forms {
+    display: flex;
 }
 
-button .hidden {
-    background-color: transparent;
-    border-color: #fff;
+
+.login-form,
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .form {
-    background-color: #fff;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    padding: 0 40px;
-    width: 50%;
-    height: 100%;
+    width: 100%;
+
+}
+
+.form__password-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
 }
 
 .form__field {
@@ -69,24 +70,26 @@ button .hidden {
     outline: none;
 }
 
-.splash-page form{
-    width: 100%;
-    height: 100%;
-    transition: all 0.6s ease-in-out;
+.form__submit-btn {
+    background-color: #86A8E7;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
-.splash-page__forms {
-    display: flex;
-    width: 100%;
-    height: 100%;
-
+button .hidden {
+    background-color: transparent;
+    border-color: #fff;
 }
 
-.login-form,
-.signup-form {
-    width: 100%;
-    height: 100%;
-}
+
+
 
 .splash-page.active .signup-form{
 
@@ -118,7 +121,7 @@ button .hidden {
     height: 40px;
 } */
 
-
+/* TOGGLE STYLES */
 .toggle-container {
     position: absolute;
     top: 0;
@@ -127,19 +130,19 @@ button .hidden {
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
+    border-radius: 80px 30px 30px 80px;
     z-index: 1000;
 }
 
 .splash-page.active .toggle-container {
     transform: translateX(-100%);
-    border-radius: 0 150px 100px 0;
+    border-radius: 30px 80px 80px 30px;
 }
 
 .toggle {
     background-color: #2da0a8;
     height: 100%;
-    background: linear-gradient(to right, #5c6bc0, #2da0a8);
+    background: linear-gradient(to right, #7F7FD5, #86A8E7);
     color: #fff;
     position: relative;
     left: -100%;
@@ -147,6 +150,11 @@ button .hidden {
     width: 200%;
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
+}
+
+.toggle__btn {
+    background-color: #6a6ab2;
+    color: #fff
 }
 
 .splash-page.active .toggle{

@@ -16,10 +16,10 @@ const SignupForm = () =>
                 
                 <div className='form__password-container'>
                     <input className='form__field' type="password" placeholder="Password" />
-                    <FaEye />
+                    {/* <FaEye size="1.5rem"/> */}
                 </div>
 
-                <button id='signup-btn'>Sign up</button>
+                <button id='submit-btn' className='form__submit-btn'>Sign up</button>
                 <p className='form__error-status'></p>
             </form>
 

@@ -10,7 +10,7 @@ const LoginForm = () =>
                 <input className='form__field' type="email" placeholder="Email or username" />
                 <div className='form__password-container'>
                     <input className='form__field' type="password" placeholder="Password" />
-                    <FaEye />
+                    {/* <FaEye size="1.5rem"/> */}
                 </div>
 
                 <button id='login-btn' className='form__submit-btn'>Log in</button>

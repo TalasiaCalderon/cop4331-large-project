@@ -22,7 +22,7 @@ const SplashPage = () => {
             <LoginForm />
             <SignupForm />
         </div>
-      {/* <Toggle onSignupClick={handleSignupClick} onLoginClick={handleLoginClick} /> */}
+      <Toggle onSignupClick={handleSignupClick} onLoginClick={handleLoginClick} />
     </div>
   );
 };

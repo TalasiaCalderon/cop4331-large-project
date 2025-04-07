@@ -12,7 +12,7 @@ const Toggle: React.FC<ToggleProps> = ({ onSignupClick, onLoginClick }) => {
             <div className="toggle__left">
                 <h1>Welcome back!</h1>
                 <p>Add tagline here</p>
-                <button className="hidden" id="login" onClick={onLoginClick}>
+                <button className="toggle__btn hidden" id="login" onClick={onLoginClick}>
                 Login
                 </button>
             </div>
@@ -20,7 +20,7 @@ const Toggle: React.FC<ToggleProps> = ({ onSignupClick, onLoginClick }) => {
             <div className="toggle__right">
                 <h1>Welcome!</h1>
                 <p>Add tagline here</p>
-                <button className="hidden" id="signup" onClick={onSignupClick}>
+                <button className="toggle__btn hidden" id="signup" onClick={onSignupClick}>
                 Sign Up
                 </button>
             </div>
