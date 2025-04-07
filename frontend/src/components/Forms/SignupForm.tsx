@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { FaFacebookF, FaGoogle, FaEye } from "react-icons/fa";
+import { FaFacebookF, FaGoogle } from "react-icons/fa";
 import React from "react";
+import "../../styles/forms.css";
 
 const SignupForm: React.FC = () => {
   const navigate = useNavigate();
@@ -28,7 +29,6 @@ const SignupForm: React.FC = () => {
             type="password"
             placeholder="Password"
           />
-          {/* <FaEye size="1.5rem" /> */}
         </div>
 
         <button

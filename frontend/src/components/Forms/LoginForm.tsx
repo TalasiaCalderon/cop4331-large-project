@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { FaFacebookF, FaGoogle, FaEye } from "react-icons/fa";
+import { FaFacebookF, FaGoogle } from "react-icons/fa";
 import React from "react";
+import "../../styles/forms.css";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+    e.preventDefault();  // Prevent form submission/reload
     navigate("/home");
   };
 
@@ -20,13 +21,13 @@ const LoginForm: React.FC = () => {
           type="email"
           placeholder="Email or username"
         />
+
         <div className="form__password-container">
           <input
             className="form__field"
             type="password"
             placeholder="Password"
           />
-          {/* <FaEye size="1.5rem" /> */}
         </div>
 
         <button

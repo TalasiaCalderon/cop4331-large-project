@@ -1,0 +1,103 @@
+/* Form styles */
+.form__header {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: clamp(100%, 100%, 500px);
+  height: max-content;
+  gap: 5px;
+}
+
+.form__password-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.form__field {
+  background-color: #eee;
+  border: none;
+  margin: 8px 0;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+}
+
+.form__submit-btn {
+  background-color: #86a8e7;
+  color: #fff;
+  font-size: 12px;
+  padding: 10px 40px;
+  margin: 5px 0px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.form__terms {
+  color: rgb(207, 207, 207);
+  font-size: 12px;
+  text-align: center;
+  margin: 0 10px;
+}
+
+/* Form divider styles */
+.form__divider {
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.form__divider::before,
+.form__divider::after {
+  flex: 1;
+  content: "";
+  padding: 0.5px;
+  background-color: rgb(207, 207, 207);
+  width: 120px;
+}
+
+.form__divider span {
+  position: relative;
+  padding: 0 10px;
+  color: rgb(207, 207, 207);
+  background-color: white;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Social icons styling */
+.form__social-icons {
+  display: flex;
+  gap: 35px;
+  margin-bottom: 20px;
+}
+
+.form__icon {
+  flex-grow: 1;
+  display: flex;
+  gap: 5px;
+  font-size: 12px;
+  border: 1px solid #dadce0;
+}
+
+/* Terms styling */
+.form__terms {
+  color: rgb(207, 207, 207);
+  font-size: 12px;
+  text-align: center;
+  margin: 0 10px;
+}

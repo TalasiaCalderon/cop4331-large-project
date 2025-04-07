@@ -1,0 +1,26 @@
+/* Splash page container */
+.splash-page {
+  display: flex;
+  background-color: #fff;
+  border-radius: 30px;
+  position: relative;
+  width: clamp(700px, 75vw, 800px);
+  height: 60vh;
+}
+
+/* Form container styles */
+.splash-page__forms {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.splash-page.active .toggle-container {
+  transform: translateX(-100%);
+  border-radius: 30px 80px 80px 30px;
+}
+
+.splash-page.active .toggle {
+  transform: translateX(50%);
+}

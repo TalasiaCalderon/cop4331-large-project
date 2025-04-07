@@ -1,0 +1,74 @@
+/* Toggle styles */
+.toggle-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.6s ease-in-out;
+  border-radius: 80px 30px 30px 80px;
+  z-index: 1000;
+}
+
+.toggle {
+  height: 100%;
+  background: linear-gradient(to right, #9fbdf0, #b6c0ed, #9fbdf0, #b6c0ed);
+  color: #fff;
+  position: relative;
+  left: -100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.toggle p {
+  opacity: 0.7;
+}
+
+.toggle__btn {
+  font-size: 12px;
+  padding: 10px 40px;
+  margin: 15px 0px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-color: #86a8e7;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Toggle sections left and right */
+.toggle__left,
+.toggle__right {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 30px;
+  text-align: center;
+  top: 0;
+  transition: all 0.6s ease-in-out;
+}
+
+.toggle__left {
+  transform: translateX(-200%);
+}
+
+.splash-page.active .toggle__left {
+  transform: translateX(0);
+}
+
+.toggle__right {
+  right: 0;
+  transform: translateX(0);
+}
+
+.splash-page.active .toggle__right {
+  transform: translateX(200%);
+}
