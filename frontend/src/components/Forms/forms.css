@@ -25,7 +25,7 @@ body {
     background-color: #fff;
     border-radius: 30px;
     position: relative;
-    width: 75vw;
+    width: clamp(700px, 75vw, 800px);
     height: 60vh;
 }
 
