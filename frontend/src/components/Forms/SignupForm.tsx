@@ -17,19 +17,20 @@ const SignupForm: React.FC = () => {
         <h1 className="form__header">Sign up</h1>
 
         <div style={{ display: "flex", gap: 20 }}>
-          <input className="form__field" type="text" placeholder="Name" />
           <input className="form__field" type="text" placeholder="Username" />
         </div>
 
-        <input className="form__field" type="email" placeholder="Email" />
+        <input
+          className="form__field form__password-container"
+          type="password"
+          placeholder="Password"
+        />
 
-        <div className="form__password-container">
-          <input
-            className="form__field"
-            type="password"
-            placeholder="Password"
-          />
-        </div>
+        <input
+          className="form__field form__password-container"
+          type="password"
+          placeholder="Confirm Password"
+        />
 
         <button
           id="submit-btn"

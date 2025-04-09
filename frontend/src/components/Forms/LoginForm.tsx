@@ -19,7 +19,7 @@ const LoginForm: React.FC = () => {
         <input
           className="form__field"
           type="email"
-          placeholder="Email or username"
+          placeholder="Username"
         />
 
         <div className="form__password-container">
