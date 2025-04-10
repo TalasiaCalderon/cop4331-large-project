@@ -6,38 +6,44 @@ import "../../styles/forms.css";
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();  // Prevent form submission/reload
     navigate("/home");
   };
 
   return (
     <section className="login-form">
-      <form className="form">
+      <form className="form" name="login-form" onSubmit={handleSubmit}>
         <h1 className="form__header">Log in</h1>
 
         <input
           className="form__field"
-          type="email"
+          type="text"
           placeholder="Username"
+          aria-label="Username"
+          autoComplete="username"
         />
 
         <div className="form__password-container">
           <input
             className="form__field"
             type="password"
+            name="password"
             placeholder="Password"
+            aria-label="Password"
+            autoComplete="current-password"
           />
         </div>
 
         <button
           id="login-btn"
           className="form__submit-btn"
-          onClick={handleClick}
+          type="submit"
         >
           Log in
         </button>
-        <p className="form__error-status"></p>
+
+        <p className="form__error-status" role="alert"></p>
       </form>
 
       <p className="form__divider">
@@ -45,12 +51,20 @@ const LoginForm: React.FC = () => {
       </p>
 
       <div className="form__social-icons">
-        <button className="form__icon">
+        <button 
+          className="form__icon"
+          type="button"
+          aria-label="Log in with Facebook"
+        >
           <FaFacebookF />
           FACEBOOK
         </button>
 
-        <button className="form__icon">
+        <button 
+          className="form__icon"
+          type="button"
+          aria-label="Log in with Google"
+        >
           <FaGoogle />
           GOOGLE
         </button>

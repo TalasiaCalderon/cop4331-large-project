@@ -16,6 +16,8 @@ const Toggle: React.FC<ToggleProps> = ({ onSignupClick, onLoginClick }) => {
           <button
             className="toggle__btn hidden"
             id="login"
+            type="button"
+            aria-label="Log in"
             onClick={onLoginClick}
           >
             Login
@@ -28,6 +30,8 @@ const Toggle: React.FC<ToggleProps> = ({ onSignupClick, onLoginClick }) => {
           <button
             className="toggle__btn hidden"
             id="signup"
+            type="button"
+            aria-label="Sign up"
             onClick={onSignupClick}
           >
             Sign Up
