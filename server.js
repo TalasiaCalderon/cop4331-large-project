@@ -17,10 +17,6 @@ const math = require('./backend/math_question_api.js');
 const english = require('./backend/english_question_api.js');
 
 
-// confirm the server is running
-app.get('/', (req, res) => {
-res.send('Server is running');
-});
 
 // use the api is running
 app.get('/api/', (req, res) => {

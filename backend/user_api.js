@@ -3,10 +3,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
-const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb+srv://ma270662:nWOkmhYD79bIygmR@cop4331incass.pj3qn3w.mongodb.net/LargeProject?retryWrites=true&w=majority&appName=COP4331InCass';
-const client = new MongoClient(url);
-client.connect();
+//const MongoClient = require('mongodb').MongoClient;
+//const url = 'mongodb+srv://ma270662:nWOkmhYD79bIygmR@cop4331incass.pj3qn3w.mongodb.net/LargeProject?retryWrites=true&w=majority&appName=COP4331InCass';
+//const client = new MongoClient(url);
+//client.connect();
 
 
 app.use(cors());
@@ -25,14 +25,14 @@ app.use(bodyParser.json());
 // }
 
 // confirm the user api is running
-app.get('/api/user/', (req, res) => {
+app.get('/api/user', (req, res) => {
 res.send('User API');
 });
 
 // check if the user exists
 // and return the user id
 app.get('/api/user/login', (req, res) => {
-var error = '';
+    var error = '';
 const { username, password } = req.body;
 const db = client.db();
 const results = db.collection('Users').find({ username: username, password: password }).toArray();
@@ -50,7 +50,7 @@ res.status(200).json(ret);
 
 // get the user question stats
 app.get('/api/user/statistics', (req, res) => {
-const { id } = req.body;
+    const { id } = req.body;
 const db = client.db();
 const results = db.collection('Users').find({ _id: id }).toArray();
 
@@ -72,7 +72,7 @@ res.status(200).json(ret);
 
 // update the user question stats
 app.post('/api/user/updateStatistics', (req, res) => {
-var error = '';
+    var error = '';
 const { id, mathQuestionsAnswered, mathQuestionsCorrect, englishQuestionsAnswered, englishQuestionsCorrect } = req.body;
 const db = client.db();
 
@@ -88,7 +88,6 @@ res.status(200).json(ret);
 
 // add a new user
 app.post('/api/user/addUser', (req, res) => {
-
 const error = '';
 const { _id, username, password } = req.body;
 const db = client.db();
@@ -105,7 +104,7 @@ res.status(200).json(ret);
 });
 
 // deletes a user
-app.post('/api/user/deleteUser', (req, res) => {
+app.delete('/api/user/deleteUser', (req, res) => {
 const error = '';
 const { _id } = req.body;
 const db = client.db();

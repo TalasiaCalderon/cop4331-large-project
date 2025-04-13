@@ -3,10 +3,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
-const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb+srv://ma270662:nWOkmhYD79bIygmR@cop4331incass.pj3qn3w.mongodb.net/LargeProject?retryWrites=true&w=majority&appName=COP4331InCass';
-const client = new MongoClient(url);
-client.connect();
+//const MongoClient = require('mongodb').MongoClient;
+//const url = 'mongodb+srv://ma270662:nWOkmhYD79bIygmR@cop4331incass.pj3qn3w.mongodb.net/LargeProject?retryWrites=true&w=majority&appName=COP4331InCass';
+//const client = new MongoClient(url);
+//client.connect();
 
 
 app.use(cors());
