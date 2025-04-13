@@ -1,7 +1,18 @@
 /* Form styles */
 .form__header {
   font-size: 2rem;
+  color: #6161c4;
   margin-bottom: 20px;
+}
+
+.login-form, .signup-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: clamp(100%, 100%, 500px);
+  width: min-content;
+  gap: 5px;
 }
 
 .form {
@@ -9,9 +20,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: clamp(100%, 100%, 500px);
-  height: max-content;
-  gap: 5px;
 }
 
 .form__password-container {
@@ -44,6 +52,12 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form__submit-btn:hover {
+  background-color: #6e95d1;
+  transition: background-color 0.3s ease;
 }
 
 .form__terms {
@@ -92,6 +106,13 @@
   gap: 5px;
   font-size: 12px;
   border: 1px solid #dadce0;
+  transition: background-color 0.3s ease;
+}
+
+.form__icon:hover {
+  background-color: rgb(207, 207, 207);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 /* Terms styling */

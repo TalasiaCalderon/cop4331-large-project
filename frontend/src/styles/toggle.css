@@ -30,7 +30,6 @@
   font-size: 12px;
   padding: 10px 40px;
   margin: 15px 0px;
-  border: 1px solid transparent;
   border-radius: 8px;
   background-color: #86a8e7;
   color: #fff;
@@ -38,6 +37,13 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle__btn:hover {
+  border: 1px solid #6e95d1;
+  background-color: #6e95d1;
+  transition: background-color 0.3s ease;
 }
 
 /* Toggle sections left and right */
