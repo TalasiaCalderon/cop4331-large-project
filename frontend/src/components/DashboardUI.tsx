@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 function DashboardUI() {
     const navigate = useNavigate();
 
-    let username: string = '';
+    let username: string = 'Defualt User';
 
     if(!localStorage.getItem('user_data')) {
-        // navigate('/login');
+        // navigate('/');
     } else {
         let _ud: any = localStorage.getItem('user_data');
         let ud = JSON.parse(_ud);
@@ -17,7 +17,7 @@ function DashboardUI() {
 
     function handleLogout(): void {
         localStorage.removeItem('user_data');
-        navigate('/login');
+        navigate('/');
     }
 
     function goToPuzzles(type: string): void {
