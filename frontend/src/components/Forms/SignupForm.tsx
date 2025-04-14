@@ -6,9 +6,9 @@ import "../../styles/forms.css";
 const SignupForm: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleSubmit  = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent form submission/reload
-    navigate("/home");
+    navigate("/dashboard");
   };
 
   return (
