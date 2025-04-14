@@ -24,6 +24,16 @@ app.get('/api/', (req, res) => {
 });
 
 
+// users schema: {
+// _id (auto-generated string)
+// username (string)
+// password (string)
+// mathQuestionsAnswered (int)
+// mathQuestionsCorrect (int)
+// englishQuestionsAnswered (int)
+// englishQuestionsCorrect (int)
+// }
+
 // mathQuestions schema {
 // _id (auto-generated string)
 // question (string)
@@ -36,16 +46,6 @@ app.get('/api/', (req, res) => {
 // answer (string)
 // }
 
-
-// users schema: {
-// _id (auto-generated string)
-// username (string)
-// password (string)
-// mathQuestionsAnswered (int)
-// mathQuestionsCorrect (int)
-// englishQuestionsAnswered (int)
-// englishQuestionsCorrect (int)
-// }
 
 // confirm the user api is running
 app.get('/api/user', (req, res) => {
@@ -153,7 +153,6 @@ app.get('/api/math', async (req, res) => {
 
 //get a random math question
 app.get('/api/math/question ', async (req, res) => {
-    res.send('Math Question API');
     const db = client.db();
     const results = await db.collection('MathQuestions').aggregate([{ $sample: { size: 1 } }]).toArray();
 
@@ -165,7 +164,6 @@ app.get('/api/math/question ', async (req, res) => {
 
 //get 4 random answers
 app.get('/api/math/answers', async (req, res) => {
-    res.send('Math Answers API');
     const db = client.db();
     const results = await db.collection('MathQuestions').aggregate([{ $sample: { size: 4 } }]).toArray();
 
