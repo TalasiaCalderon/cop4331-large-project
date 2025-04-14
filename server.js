@@ -47,6 +47,8 @@ app.get('/api/', (req, res) => {
 // }
 
 
+
+
 // confirm the user api is running
 app.get('/api/user', (req, res) => {
     res.send('User API');
@@ -54,21 +56,46 @@ app.get('/api/user', (req, res) => {
 
 // check if the user exists
 // and return the user id
-app.get('/api/user/login', (req, res) => {
-    var error = '';
+
+//************ BELOW IS THE REAL LOGIN API CALL *******************
+
+// app.get('/api/user/login', (req, res) => {
+//     var error = '';
+//     const { username, password } = req.body;
+//     const db = client.db();
+//     const results = db.collection('Users').find({ username: username, password: password }).toArray();
+
+//     var id = -1;
+
+//     if (results.length > 0) {
+//         id = results[0]._id;
+//     }
+//     var ret = { id: id, error: '' };
+
+//     res.status(200).json(ret);
+// });
+
+// ************ BELOW IS THE FAKE LOGIN FOR FAKE USERS RIGHT NOW *************
+
+app.post('/api/user/login', (req, res) => {
     const { username, password } = req.body;
-    const db = client.db();
-    const results = db.collection('Users').find({ username: username, password: password }).toArray();
 
-    var id = -1;
+    // These are our mock users
+    const mockUsers = [
+        { _id: "1", username: "testuser1", password: "pass123" },
+        { _id: "2", username: "demo", password: "demo123" },
+        { _id: "3", username: "guest", password: "guestpass" }
+    ];
 
-    if (results.length > 0) {
-        id = results[0]._id;
+    const user = mockUsers.find(u => u.username === username && u.password === password);
+
+    if (user) {
+        res.status(200).json({ id: user._id, error: "" });
+    } else {
+        res.status(200).json({ id: -1, error: "User not found" });
     }
-    var ret = { id: id, error: '' };
-
-    res.status(200).json(ret);
 });
+
 
 
 // get the user question stats
