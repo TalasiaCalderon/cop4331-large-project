@@ -8,7 +8,7 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();  // Prevent form submission/reload
-    navigate("/home");
+    navigate("/dashboard");  // Redirect to dashboard
   };
 
   return (
