@@ -1,27 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function DashboardUI() {
     const navigate = useNavigate();
-    const [username, setUsername] = useState('User');
 
-    useEffect(() => {
-        const _ud = localStorage.getItem('user_data');
-
-        if (_ud === null) {
-            navigate('/'); // Redirect to login if no user data
-        } else {
-            try {
-                const ud = JSON.parse(_ud);
-                if (ud.firstName) {
-                    setUsername(ud.firstName);
-                }
-            } catch (error) {
-                console.error('Invalid user data in localStorage:', error);
-                navigate('/'); // Redirect if JSON is broken
-            }
-        }
-    }, [navigate]);
+    let _ud: any = localStorage.getItem('user_data');
+    let ud = JSON.parse(_ud);
+    let username: string = ud.firstName;
 
     function handleLogout(): void {
         localStorage.removeItem('user_data');
