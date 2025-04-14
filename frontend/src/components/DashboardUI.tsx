@@ -17,7 +17,7 @@ function DashboardUI() {
 
     function handleLogout(): void {
         localStorage.removeItem('user_data');
-        navigate('/login');
+        navigate('/');
     }
 
     function goToPuzzles(type: string): void {
