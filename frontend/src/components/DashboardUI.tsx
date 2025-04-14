@@ -4,9 +4,16 @@ import { useNavigate } from 'react-router-dom';
 function DashboardUI() {
     const navigate = useNavigate();
 
-    let _ud: any = localStorage.getItem('user_data');
-    let ud = JSON.parse(_ud);
-    let username: string = ud.firstName;
+    let username: string = '';
+
+    if(!localStorage.getItem('user_data')) {
+        // navigate('/login');
+    } else {
+        let _ud: any = localStorage.getItem('user_data');
+        let ud = JSON.parse(_ud);
+        username = ud.firstName;
+    }
+
 
     function handleLogout(): void {
         localStorage.removeItem('user_data');
