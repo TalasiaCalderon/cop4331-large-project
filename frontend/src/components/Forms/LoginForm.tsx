@@ -22,6 +22,7 @@ const LoginForm: React.FC = () => {
           placeholder="Username"
           aria-label="Username"
           autoComplete="username"
+          required
         />
 
         <div className="form__password-container">
@@ -32,6 +33,7 @@ const LoginForm: React.FC = () => {
             placeholder="Password"
             aria-label="Password"
             autoComplete="current-password"
+            required
           />
         </div>
 

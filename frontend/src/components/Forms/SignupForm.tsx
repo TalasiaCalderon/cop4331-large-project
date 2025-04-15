@@ -64,6 +64,7 @@ const SignupForm: React.FC<Props> = ({ onSwitchToLogin }) => {
             autoComplete="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
         </div>
 
@@ -76,6 +77,7 @@ const SignupForm: React.FC<Props> = ({ onSwitchToLogin }) => {
           autoComplete="new-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
 
         <input
@@ -86,6 +88,7 @@ const SignupForm: React.FC<Props> = ({ onSwitchToLogin }) => {
           aria-label="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          required
         />
 
         <button id="submit-btn" className="form__submit-btn" type="submit">
