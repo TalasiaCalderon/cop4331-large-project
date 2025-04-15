@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const { ObjectId } = require('mongodb');
 const app = express();
@@ -21,7 +20,7 @@ async function connectToDatabase() {
 connectToDatabase();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 // use the api is running
 app.get('/api/', (req, res) => {
