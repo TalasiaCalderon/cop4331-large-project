@@ -86,7 +86,7 @@ const EnglishQuiz: React.FC = () => {
   };
 
   const handleBackToDashboard = () => {
-    navigate('/dashboard');
+   navigate('/dashboard', { state: { refreshStats: true } });
   };
 
   const shuffleArray = (arr: string[]) => {
