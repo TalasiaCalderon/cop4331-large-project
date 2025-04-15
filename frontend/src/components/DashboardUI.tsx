@@ -31,10 +31,8 @@ function DashboardUI() {
 
     return (
         <div className="dashboard-wrapper">
-            <button className="logout-button-top" onClick={handleLogout}>
-                Logout
-            </button>
-
+            <div style={{flexGrow: 1}}>
+            </div>
             <div className="dashboard-header">
                 <h1 className="dashboard-main-title">Train Rot</h1>
                 <p className="dashboard-subtitle">
@@ -58,6 +56,11 @@ function DashboardUI() {
                         Start English Game
                     </button>
                 </div>
+            </div>
+            <div style={{flexGrow: 1, display: "flex-box", alignContent: "center"}}>
+                <button className="logout-button-top" onClick={handleLogout}>
+                    Logout
+                </button>
             </div>
         </div>
     );
