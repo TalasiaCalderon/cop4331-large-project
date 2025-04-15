@@ -69,11 +69,28 @@ const MathQuiz: React.FC = () => {
 
   const updateUserStats = async (correct: number, total: number) => {
     try {
+      const userData = JSON.parse(localStorage.getItem('user_data') || '{}');
+  
+      const updatedMathQuestionsAnswered = (userData.mathQuestionsAnswered || 0) + total;
+      const updatedMathQuestionsCorrect = (userData.mathQuestionsCorrect || 0) + correct;
+  
       await axios.post('/api/user/updateStatistics', {
-        id: userId,
-        mathQuestionsCorrect: correct,
-        mathQuestionsAnswered: total
+        id: userData.id,
+        englishQuestionsAnswered: userData.englishQuestionsAnswered || 0,
+        englishQuestionsCorrect: userData.englishQuestionsCorrect || 0,
+        mathQuestionsAnswered: updatedMathQuestionsAnswered,
+        mathQuestionsCorrect: updatedMathQuestionsCorrect,
       });
+  
+      // Update localStorage to keep stats in sync
+      localStorage.setItem(
+        'user_data',
+        JSON.stringify({
+          ...userData,
+          englishQuestionsAnswered: updatedMathQuestionsAnswered,
+          englishQuestionsCorrect: updatedMathQuestionsCorrect,
+        })
+      );
     } catch (err) {
       console.error('Failed to update user stats', err);
     }
