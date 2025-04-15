@@ -1,4 +1,4 @@
-import { SVGProps } from 'react';
+import { SVGProps, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css';
 
@@ -36,7 +36,7 @@ export function Books(props: SVGProps<SVGSVGElement>) {
           d="M105.53 88.98s6.26-2.45 11.18-2.23s6.63 3.67 6.63 3.67c-.93-4.23-5.3-6.39-5.3-6.39l-65-32.73c-.45-.19-2.11-.58-4.66.47c-2.06.85-8.79 4-8.79 4z"
         ></path>
         <path
-          fill="#424242"
+        fill="#424242"
           d="M123.62 91.22c-.47-1.87-1.63-3.87-3.77-4.84c-2.82-1.27-6.84-.94-9.41.4l-4.91 2.18v3.46l6.21-2.76c6.04-2.69 8.72 1.34 8.95 2.29c.96 3.87-.9 6.11-6.39 8.63l-8.92 4.02v3.48l10.26-4.57c4.54-1.82 9.72-5.24 7.98-12.29"
         ></path>
         <path
@@ -132,18 +132,47 @@ export function RoundCalculate(props: SVGProps<SVGSVGElement>) {
 }
   
 function DashboardUI() {
+
     const navigate = useNavigate();
 
     let username: string = 'Default User';
-    const _ud = localStorage.getItem('user_data');
-    if (_ud) {
-        try {
-            const ud = JSON.parse(_ud);
-            username = ud.firstName;
-        } catch (err) {
-            console.error('Invalid user_data in localStorage.');
+    let userId: string = '';
+
+    const [mathStats, setMathStats] = useState({ correct: 0, answered: 0 });
+    const [englishStats, setEnglishStats] = useState({ correct: 0, answered: 0 });
+
+    useEffect(() => {
+        const _ud = localStorage.getItem('user_data');
+        if (_ud) {
+            try {
+                const ud = JSON.parse(_ud);
+                username = ud.firstName;
+                userId = ud.id;
+
+                fetch('/api/user/statistics', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: userId })
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        setMathStats({
+                            correct: data.mathQuestionsCorrect,
+                            answered: data.mathQuestionsAnswered
+                        });
+                        setEnglishStats({
+                            correct: data.englishQuestionsCorrect,
+                            answered: data.englishQuestionsAnswered
+                        });
+                    })
+                    .catch((err) => console.error('Error fetching stats:', err));
+            } catch (err) {
+                console.error('Invalid user_data in localStorage.');
+            }
         }
-    }
+    }, []);
+
+
 
     function handleLogout(): void {
         localStorage.removeItem('user_data');
