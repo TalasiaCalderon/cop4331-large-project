@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 interface Question {
-  question: string;
-  answer: string;
+  word: string;
+  definition: string;
 }
 
 const EnglishQuiz: React.FC = () => {
