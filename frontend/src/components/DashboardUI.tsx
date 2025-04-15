@@ -57,7 +57,7 @@ function DashboardUI() {
                     </button>
                 </div>
             </div>
-            <div style={{flexGrow: 1, display: "flex-box", alignContent: "center"}}>
+            <div style={{flexGrow: 1, display: "flex-box"}}>
                 <button className="logout-button-top" onClick={handleLogout}>
                     Logout
                 </button>

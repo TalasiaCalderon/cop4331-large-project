@@ -27,7 +27,7 @@
 
 /* Logout button inside container */
 .logout-button-top {
-  justify-self: center;
+  margin-top: 60px;
   background-color: #ef4444;
   color: white;
   border: none;
