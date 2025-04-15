@@ -3,6 +3,7 @@ import SplashPage from './pages/SplashPage';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import EnglishQuiz from './pages/EnglishQuiz';
+import MathQuiz from './pages/MathQuiz';
 import './App.css';
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
 	<Route path="/english" element={<EnglishQuiz />} />
-      </Routes>
+        <Route path="/math" element={<MathQuiz />} />
+	</Routes>
     </Router>
   );
 }

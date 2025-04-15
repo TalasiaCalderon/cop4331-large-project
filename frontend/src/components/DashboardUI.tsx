@@ -36,9 +36,9 @@ function DashboardUI() {
             </button>
 
             <div className="dashboard-header">
-                <h1 className="dashboard-main-title">Puzzle Dashboard</h1>
+                <h1 className="dashboard-main-title">Train Rot</h1>
                 <p className="dashboard-subtitle">
-                    Sharpen your skills with math and English puzzles!
+                    Undo years of brain rot with middle-school-level games!
                 </p>
             </div>
 
@@ -47,7 +47,7 @@ function DashboardUI() {
                     <h2 className="dashboard-title">🧮 Math</h2>
                     <p className="dashboard-score">Score: None</p>
                     <button className="math-button" onClick={() => goToPuzzles('math')}>
-                        Start Math Puzzles
+                        Start Math Game
                     </button>
                 </div>
 
@@ -55,7 +55,7 @@ function DashboardUI() {
                     <h2 className="dashboard-title">📚 English</h2>
                     <p className="dashboard-score">Score: None</p>
                     <button className="english-button" onClick={() => goToPuzzles('english')}>
-                        Start English Puzzles
+                        Start English Game
                     </button>
                 </div>
             </div>
