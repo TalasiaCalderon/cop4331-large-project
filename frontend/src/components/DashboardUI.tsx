@@ -1,5 +1,5 @@
 import { SVGProps, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Dashboard.css';
 
 export function Books(props: SVGProps<SVGSVGElement>) {
@@ -134,28 +134,25 @@ export function RoundCalculate(props: SVGProps<SVGSVGElement>) {
 function DashboardUI() {
 
     const navigate = useNavigate();
+    const location = useLocation(); // 👈 detects route change
 
-    let username: string = 'Default User';
-    let userId: string = '';
-
+    const [username, setUsername] = useState("Default")
     const [mathStats, setMathStats] = useState({ correct: 0, answered: 0 });
     const [englishStats, setEnglishStats] = useState({ correct: 0, answered: 0 });
 
-    useEffect(() => {
+    const fetchStats = () => {
         const _ud = localStorage.getItem('user_data');
         if (_ud) {
             try {
                 const ud = JSON.parse(_ud);
-                username = ud.firstName;
-                userId = ud.id;
-
                 fetch('/api/user/statistics', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: userId })
+                    body: JSON.stringify({ id: ud.id })
                 })
                     .then((res) => res.json())
                     .then((data) => {
+                        setUsername(data.username);
                         setMathStats({
                             correct: data.mathQuestionsCorrect,
                             answered: data.mathQuestionsAnswered
@@ -170,9 +167,13 @@ function DashboardUI() {
                 console.error('Invalid user_data in localStorage.');
             }
         }
-    }, []);
+    };
 
+    useEffect(() => {
+        fetchStats();
+    }, [location])
 
+    
 
     function handleLogout(): void {
         localStorage.removeItem('user_data');
@@ -193,7 +194,7 @@ function DashboardUI() {
                 <div style={{flexGrow: 1}}>
                 </div>
                 <div className="dashboard-header">
-                    <h1 className="dashboard-main-title">Train Rot</h1>
+                    <h1 className="dashboard-main-title"> Welcome to Train Rot, {username}</h1>
                     <p className="dashboard-subtitle">
                         Undo years of brain rot with middle-school-level games!
                     </p>
