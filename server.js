@@ -191,12 +191,18 @@ app.post('/api/user/addUser', async (req, res) => {
 // deletes a user
 app.delete('/api/user/deleteUser', async (req, res) => {
     console.log('Delete User API');
-    const error = '';
-    const { username, password } = req.body;
+    let error = '';
+    const { id } = req.body;
     const db = client.db('LargeProject');
 
     try {
-        await db.collection('users').deleteOne({ username: username, password: password });
+        const objectId = new ObjectId(id);
+
+        const result = await db.collection('users').deleteOne({ _id: objectId });
+            
+        if (result.deletedCount === 0) {
+            error = 'User not found';
+        }
     }
     catch (e) {
         error = e;
