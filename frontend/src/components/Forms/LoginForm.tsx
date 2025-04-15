@@ -1,14 +1,59 @@
 import { useNavigate } from "react-router-dom";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
-import React from "react";
+import React, { FormEvent, useState } from "react";
 import "../../styles/forms.css";
 
+type LoginRequest = {
+  username: string;
+  password: string;
+};
+
+type LoginResponse = {
+  id: string | number;
+  error: string;
+};
+
+
+
 const LoginForm: React.FC = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();  // Prevent form submission/reload
-    navigate("/dashboard");  // Redirect to dashboard
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+  
+    const loginData: LoginRequest = { username, password };
+  
+    try {
+      const res = await fetch("http://localhost:5000/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      });
+      const data: LoginResponse = await res.json();
+      console.log("Server response:", data);
+  
+      console.log(data.id);
+      if (data.id && typeof data.id === "string" && isNaN(Number(data.id))) {
+        const user = {
+          id: data.id,
+        };
+  
+        localStorage.setItem("user_data", JSON.stringify(user));
+        setErrorMessage("");
+        
+        navigate("/dashboard");
+      } else {
+        setErrorMessage("Username or password is incorrect.");
+      }
+    } catch (error: any) {
+      console.error("Login error:", error);
+      setErrorMessage("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -22,6 +67,7 @@ const LoginForm: React.FC = () => {
           placeholder="Username"
           aria-label="Username"
           autoComplete="username"
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
 
@@ -33,6 +79,7 @@ const LoginForm: React.FC = () => {
             placeholder="Password"
             aria-label="Password"
             autoComplete="current-password"
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
@@ -45,7 +92,7 @@ const LoginForm: React.FC = () => {
           Log in
         </button>
 
-        <p className="form__error-status" role="alert"></p>
+        <p className="form__error-status" role="alert"> {errorMessage} </p>
       </form>
 
       <p className="form__divider">

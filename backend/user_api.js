@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
@@ -10,7 +10,7 @@ const app = express();
 
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 
 
@@ -31,25 +31,27 @@ res.send('User API');
 
 // check if the user exists
 // and return the user id
-app.get('/api/user/login', (req, res) => {
-    var error = '';
-const { username, password } = req.body;
-const db = client.db();
-const results = db.collection('Users').find({ username: username, password: password }).toArray();
-
-var id = -1;
-
-if (results.length > 0) {
-id = results[0]._id;
-}
-var ret = { id: id, error: '' };
-
-res.status(200).json(ret);
-});
-
+app.post('/api/user/login', async (req, res) => {
+    const { username, password } = req.body;
+    console.log("Incoming login request:", req.body);
+  
+    try {
+      const db = client.db();
+      const results = await db.collection('Users').find({ username, password }).toArray();
+  
+      let id = -1;
+      if (results.length > 0) {
+        id = results[0]._id;
+      }
+  
+      res.status(200).json({ id, error: '' });
+    } catch (err) {
+      res.status(500).json({ id: -1, error: 'Server error' });
+    }
+  });
 
 // get the user question stats
-app.get('/api/user/statistics', (req, res) => {
+app.post('/api/user/statistics', (req, res) => {
     const { id } = req.body;
 const db = client.db();
 const results = db.collection('Users').find({ _id: id }).toArray();
