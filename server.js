@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { ObjectId } = require('mongodb');
 const app = express();
 
 const MongoClient = require('mongodb').MongoClient;
@@ -71,8 +72,6 @@ app.get('/api/user/login',async (req, res) => {
     console.log('Login API');
     var error = '';
     const { username, password } = req.body;
-    console.log('Username: ' + username);
-    console.log('Password: ' + password);
     const db = client.db('LargeProject');
     const results = await db.collection('users').find({ "username": username, "password": password }).toArray();
 
@@ -84,7 +83,6 @@ app.get('/api/user/login',async (req, res) => {
 
     if (results.length > 0) {
         console.log('User Found');
-        console.log(results[0]);
         id = results[0]._id;
         mathQuestionsAnswered = results[0].mathQuestionsAnswered;
         mathQuestionsCorrect = results[0].mathQuestionsAnswered;
@@ -104,24 +102,40 @@ app.get('/api/user/login',async (req, res) => {
 // get the user question stats
 app.get('/api/user/statistics', async (req, res) => {
     console.log('Get User Statistics API');
-    const { id } = req.body;
+    const { id } = req.body; // Extract the id from the request body
     const db = client.db("LargeProject");
-    const results = await db.collection('users').find({ _id: id }).toArray();
 
-    var mathQuestionsAnswered = 0;
-    var mathQuestionsCorrect = 0;
-    var englishQuestionsAnswered = 0;
-    var englishQuestionsCorrect = 0;
+    try {
+        // Convert the id to an ObjectId
+        const objectId = new ObjectId(id);
 
-    if (results.length > 0) {
-        mathQuestionsAnswered = results[0].mathQuestionsAnswered;
-        mathQuestionsCorrect = results[0].mathQuestionsCorrect;
-        englishQuestionsAnswered = results[0].englishQuestionsAnswered;
-        englishQuestionsCorrect = results[0].englishQuestionsCorrect;
+        // Query the database using the ObjectId
+        const results = await db.collection('users').find({ _id: objectId }).toArray();
+
+        var mathQuestionsAnswered = 0;
+        var mathQuestionsCorrect = 0;
+        var englishQuestionsAnswered = 0;
+        var englishQuestionsCorrect = 0;
+
+        if (results.length > 0) {
+            mathQuestionsAnswered = results[0].mathQuestionsAnswered;
+            mathQuestionsCorrect = results[0].mathQuestionsCorrect;
+            englishQuestionsAnswered = results[0].englishQuestionsAnswered;
+            englishQuestionsCorrect = results[0].englishQuestionsCorrect;
+        }
+
+        var ret = {
+            mathQuestionsAnswered: mathQuestionsAnswered,
+            mathQuestionsCorrect: mathQuestionsCorrect,
+            englishQuestionsAnswered: englishQuestionsAnswered,
+            englishQuestionsCorrect: englishQuestionsCorrect
+        };
+
+        res.status(200).json(ret);
+    } catch (error) {
+        console.error('Error fetching user statistics:', error);
+        res.status(500).json({ error: 'Failed to fetch user statistics' });
     }
-    var ret = { mathQuestionsAnswered: mathQuestionsAnswered, mathQuestionsCorrect: mathQuestionsCorrect, englishQuestionsAnswered: englishQuestionsAnswered, englishQuestionsCorrect: englishQuestionsCorrect };
-
-    res.status(200).json(ret);
 });
 
 // update the user question stats
@@ -132,9 +146,24 @@ app.post('/api/user/updateStatistics', async (req, res) => {
     const db = client.db('LargeProject');
 
     try {
-        await db.collection('users').updateOne({ _id: id }, { $set: { mathQuestionsAnswered: mathQuestionsAnswered, mathQuestionsCorrect: mathQuestionsCorrect, englishQuestionsAnswered: englishQuestionsAnswered, englishQuestionsCorrect: englishQuestionsCorrect } });
+        // Convert the id to an ObjectId
+        const objectId = new ObjectId(id);
+
+        // Update the user's statistics in the database
+        await db.collection('users').updateOne(
+            { _id: objectId }, // Use the ObjectId for the query
+            {
+                $set: {
+                    mathQuestionsAnswered: mathQuestionsAnswered,
+                    mathQuestionsCorrect: mathQuestionsCorrect,
+                    englishQuestionsAnswered: englishQuestionsAnswered,
+                    englishQuestionsCorrect: englishQuestionsCorrect
+                }
+            }
+        );
     } catch (e) {
-        error = e;
+        console.error('Error updating user statistics:', e);
+        error = e.message;
     }
 
     var ret = { error: error };
