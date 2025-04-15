@@ -47,7 +47,8 @@ const SignupForm: React.FC<Props> = ({ onSwitchToLogin }) => {
         localStorage.setItem("user_data", JSON.stringify(user));
         
         setError("");
-        onSwitchToLogin(); // Go back to login screen after successful signup
+        //onSwitchToLogin(); // Go back to login screen after successful signup
+	window.location.reload();
       }
     } catch (err) {
       console.error("Signup failed:", err);
