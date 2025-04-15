@@ -40,6 +40,12 @@ const SignupForm: React.FC<Props> = ({ onSwitchToLogin }) => {
       if (data.error) {
         setError("Username already exists or server error.");
       } else {
+        const user = {
+          id: data.id,
+        };
+  
+        localStorage.setItem("user_data", JSON.stringify(user));
+        
         setError("");
         onSwitchToLogin(); // Go back to login screen after successful signup
       }
