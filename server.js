@@ -217,6 +217,7 @@ app.get('/api/english/', (req, res) => {
 
 // get a random english question
 app.get('/api/english/question', async (req, res) => {
+    console.log('English Question API');
     const db = client.db('LargeProject');
     const results = await db.collection('englishQuestions').aggregate([{ $sample: { size: 1 } }]).toArray();
 
@@ -231,6 +232,7 @@ app.get('/api/english/question', async (req, res) => {
 
 // get 4 random answers
 app.get('/api/english/answers', async (req, res) => {
+    console.log('English Answers API');
     const db = client.db('LargeProject');
     const results = await db.collection('englishQuestions').aggregate([{ $sample: { size: 4 } }]).toArray();
 
