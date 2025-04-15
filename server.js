@@ -49,7 +49,6 @@ app.post('/api/user/login', async (req, res) => {
     if (results.length > 0) {
         console.log('User Found');
         id = results[0]._id;
-        username = results[0].username;
         // Fix: Correctly assign values from database results
         mathQuestionsAnswered = results[0].mathQuestionsAnswered;
         mathQuestionsCorrect = results[0].mathQuestionsCorrect; // Fixed: was using mathQuestionsAnswered
