@@ -1,14 +1,53 @@
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
-import React from "react";
 import "../../styles/forms.css";
 
-const SignupForm: React.FC = () => {
-  const navigate = useNavigate();
+type Props = {
+  onSwitchToLogin: () => void;
+};
 
-  const handleSubmit  = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent form submission/reload
-    navigate("/home");
+const SignupForm: React.FC<Props> = ({ onSwitchToLogin }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!username || !password || !confirmPassword) {
+      setError("All fields are required.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/user/addUser", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          _id: username, // assuming _id is same as username
+          username,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        setError("Username already exists or server error.");
+      } else {
+        setError("");
+        onSwitchToLogin(); // Go back to login screen after successful signup
+      }
+    } catch (err) {
+      console.error("Signup failed:", err);
+      setError("Network error or server unreachable.");
+    }
   };
 
   return (
@@ -17,13 +56,15 @@ const SignupForm: React.FC = () => {
         <h1 className="form__header">Sign up</h1>
 
         <div style={{ display: "flex", gap: 20 }}>
-          <input 
-            className="form__field" 
+          <input
+            className="form__field"
             type="text"
             name="username"
             placeholder="Username"
             aria-label="Username"
-            autoComplete="username" 
+            autoComplete="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
 
@@ -34,25 +75,25 @@ const SignupForm: React.FC = () => {
           placeholder="Password"
           aria-label="Password"
           autoComplete="new-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
-<input
+        <input
           className="form__field form__password-container"
           type="password"
-          name="password"
+          name="confirmPassword"
           placeholder="Confirm Password"
           aria-label="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
         />
 
-        <button
-          id="submit-btn"
-          className="form__submit-btn"
-          type="submit"
-        >
+        <button id="submit-btn" className="form__submit-btn" type="submit">
           Sign up
         </button>
 
-        <p className="form__error-status" role="alert"></p>
+        {error && <p className="form__error-status" role="alert">{error}</p>}
       </form>
 
       <p className="form__divider">
@@ -60,7 +101,7 @@ const SignupForm: React.FC = () => {
       </p>
 
       <div className="form__social-icons">
-        <button 
+        <button
           className="form__icon"
           type="button"
           aria-label="Sign up with Facebook"
@@ -69,7 +110,7 @@ const SignupForm: React.FC = () => {
           FACEBOOK
         </button>
 
-        <button 
+        <button
           className="form__icon"
           type="button"
           aria-label="Sign up with Google"

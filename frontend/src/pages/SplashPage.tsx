@@ -20,12 +20,16 @@ const SplashPage: React.FC = () => {
   }, []);
 
   return (
-    <main ref={containerRef} className="splash-page" role="main" aria-label="Authentication screen">
-
+    <main
+      ref={containerRef}
+      className="splash-page"
+      role="main"
+      aria-label="Authentication screen"
+    >
       {/* Form section containing both login and signup forms */}
       <section className="splash-page__forms" aria-labelledby="auth-forms">
         <LoginForm />
-        <SignupForm />
+        <SignupForm onSwitchToLogin={handleLoginClick} />
       </section>
 
       {/* Toggle component to switch between login and signup views */}

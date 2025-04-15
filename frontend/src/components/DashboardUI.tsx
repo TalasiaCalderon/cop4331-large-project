@@ -1,19 +1,20 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Dashboard.css';
 
 function DashboardUI() {
     const navigate = useNavigate();
 
-    let username: string = 'Defualt User';
-
-    if(!localStorage.getItem('user_data')) {
-        // navigate('/');
-    } else {
-        let _ud: any = localStorage.getItem('user_data');
-        let ud = JSON.parse(_ud);
-        username = ud.firstName;
+    let username: string = 'Default User';
+    const _ud = localStorage.getItem('user_data');
+    if (_ud) {
+        try {
+            const ud = JSON.parse(_ud);
+            username = ud.firstName;
+        } catch (err) {
+            console.error('Invalid user_data in localStorage.');
+        }
     }
-
 
     function handleLogout(): void {
         localStorage.removeItem('user_data');
@@ -22,41 +23,41 @@ function DashboardUI() {
 
     function goToPuzzles(type: string): void {
         if (type === 'math') {
-            navigate('/puzzles/math');
+            navigate('/math');
         } else if (type === 'english') {
-            navigate('/puzzles/english');
+            navigate('/english');
         }
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-200 to-blue-100 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md text-center">
-                <h1 className="text-3xl font-bold mb-4">
-                    Welcome, <span className="text-blue-600">{username}</span>!
-                </h1>
-                <p className="mb-6 text-gray-600">Choose a puzzle category to begin:</p>
+        <div className="dashboard-wrapper">
+            <button className="logout-button-top" onClick={handleLogout}>
+                Logout
+            </button>
 
-                <div className="flex flex-col gap-4 mb-6">
-                    <button
-                        onClick={() => goToPuzzles('math')}
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl transition"
-                    >
-                        🧮 Math Puzzles
-                    </button>
-                    <button
-                        onClick={() => goToPuzzles('english')}
-                        className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-xl transition"
-                    >
-                        📚 English Puzzles
+            <div className="dashboard-header">
+                <h1 className="dashboard-main-title">Puzzle Dashboard</h1>
+                <p className="dashboard-subtitle">
+                    Sharpen your skills with math and English puzzles!
+                </p>
+            </div>
+
+            <div className="dashboard-card-container">
+                <div className="dashboard-box">
+                    <h2 className="dashboard-title">🧮 Math</h2>
+                    <p className="dashboard-score">Score: None</p>
+                    <button className="math-button" onClick={() => goToPuzzles('math')}>
+                        Start Math Puzzles
                     </button>
                 </div>
 
-                <button
-                    onClick={handleLogout}
-                    className="text-sm text-red-500 underline hover:text-red-700 transition"
-                >
-                    Logout
-                </button>
+                <div className="dashboard-box">
+                    <h2 className="dashboard-title">📚 English</h2>
+                    <p className="dashboard-score">Score: None</p>
+                    <button className="english-button" onClick={() => goToPuzzles('english')}>
+                        Start English Puzzles
+                    </button>
+                </div>
             </div>
         </div>
     );

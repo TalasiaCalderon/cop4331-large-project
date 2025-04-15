@@ -1,2 +1,5 @@
 
 node_modules/
+
+backend/addFiveMath.js
+backend/addFiveVocab.js
