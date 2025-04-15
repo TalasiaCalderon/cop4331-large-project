@@ -56,12 +56,14 @@ app.post('/api/user/statistics', (req, res) => {
 const db = client.db();
 const results = db.collection('Users').find({ _id: id }).toArray();
 
+var username = 0;
 var mathQuestionsAnswered = 0;
 var mathQuestionsCorrect = 0;
 var englishQuestionsAnswered = 0;
 var englishQuestionsCorrect = 0;
 
 if (results.length > 0) {
+username = results[0].username;
 mathQuestionsAnswered = results[0].mathQuestionsAnswered;
 mathQuestionsCorrect = results[0].mathQuestionsCorrect;
 englishQuestionsAnswered = results[0].englishQuestionsAnswered;
