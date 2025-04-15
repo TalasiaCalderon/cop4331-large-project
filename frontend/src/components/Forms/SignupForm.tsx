@@ -26,7 +26,7 @@ const SignupForm: React.FC<Props> = ({ onSwitchToLogin }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/user/addUser", {
+      const response = await fetch("/api/user/addUser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
