@@ -178,7 +178,7 @@ app.get('/api/math', async (req, res) => {
 });
 
 //get a random math question
-app.get('/api/math/question ', async (req, res) => {
+app.get('/api/math/question', async (req, res) => {
     console.log('Math Question API');
     const db = client.db('LargeProject');
     const results = await db.collection('mathQuestions').aggregate([{ $sample: { size: 1 } }]).toArray();
@@ -198,7 +198,7 @@ app.get('/api/math/question ', async (req, res) => {
 app.get('/api/math/answers', async (req, res) => {
     console.log('Math Answers API');
     const db = client.db('LargeProject');
-    const results = await db.collection('mathQuestions').aggregate([{ $sample: { size: 4 } }]).toArray();
+    const results = await db.collection('mathQuestions').aggregate([{ $sample: { size: 3 } }]).toArray();
 
     var answers = [];
     for (var i = 0; i < results.length; i++) {
@@ -224,8 +224,8 @@ app.get('/api/english/question', async (req, res) => {
     var question = 'No Question Found';
     var answer = 'No Answer Found';
     if (results.length > 0) {
-        question = results[0].question;
-        answer = results[0].answer;
+        question = results[0].word;
+        answer = results[0].definition;
     }
     res.status(200).json({ word: question, definition: answer });
 });
@@ -234,11 +234,11 @@ app.get('/api/english/question', async (req, res) => {
 app.get('/api/english/answers', async (req, res) => {
     console.log('English Answers API');
     const db = client.db('LargeProject');
-    const results = await db.collection('englishQuestions').aggregate([{ $sample: { size: 4 } }]).toArray();
+    const results = await db.collection('englishQuestions').aggregate([{ $sample: { size: 3 } }]).toArray();
 
     var answers = [];
     for (var i = 0; i < results.length; i++) {
-        answers.push(results[i].answer);
+        answers.push(results[i].definition);
     }
     res.status(200).json({ answers: answers });
 });

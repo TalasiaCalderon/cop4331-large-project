@@ -26,25 +26,27 @@ const EnglishQuiz: React.FC = () => {
   }, []);
 
   const fetchQuestion = async () => {
-    setIsLoading(true);
-    try {
-      const qRes = await axios.get('/api/english/question');
-      const aRes = await axios.get('/api/english/answers');
+  setIsLoading(true);
+  try {
+    const qRes = await axios.get('/api/english/question');
+    const aRes = await axios.get('/api/english/answers');
 
-      let answers = aRes.data.answers;
-      if (!answers.includes(qRes.data.answer)) {
-        answers[Math.floor(Math.random() * 4)] = qRes.data.answer;
-      }
+    let answers = [...new Set([...aRes.data.answers, qRes.data.definition])];
 
-      setQuestionData(qRes.data);
-      setAnswerChoices(shuffleArray(answers));
-      setSelectedAnswer(null);
-    } catch (error) {
-      console.error('Failed to load question:', error);
-    } finally {
-      setIsLoading(false);
+    while (answers.length < 4) {
+      answers.push(qRes.data.definition);
     }
-  };
+
+    setQuestionData(qRes.data);
+    setAnswerChoices(shuffleArray(answers));
+    setSelectedAnswer(null);
+  } catch (error) {
+    console.error('Failed to load question:', error);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const handleAnswerSelect = (answer: string) => {
     setSelectedAnswer(answer);
@@ -53,7 +55,7 @@ const EnglishQuiz: React.FC = () => {
   const handleNext = async () => {
     if (!questionData) return;
 
-    const correct = selectedAnswer === questionData.answer;
+    const correct = selectedAnswer === questionData.definition;
     const newScore = correct ? score + 1 : score;
 
     setScore(newScore);
@@ -99,7 +101,7 @@ const EnglishQuiz: React.FC = () => {
         <p>Loading...</p>
       ) : questionData ? (
         <>
-          <h2>{questionData.question}</h2>
+          <h2>{questionData.word}</h2>
           <div className="answer-options">
             {answerChoices.map((choice, index) => (
               <button
