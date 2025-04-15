@@ -68,7 +68,7 @@ app.get('/api/user', (req, res) => {
 
 //************ BELOW IS THE REAL LOGIN API CALL *******************
 
-app.get('/api/user/login',async (req, res) => {
+app.post('/api/user/login',async (req, res) => {
     console.log('Login API');
     var error = '';
     const { username, password } = req.body;
@@ -100,7 +100,7 @@ app.get('/api/user/login',async (req, res) => {
 
 
 // get the user question stats
-app.get('/api/user/statistics', async (req, res) => {
+app.post('/api/user/statistics', async (req, res) => {
     console.log('Get User Statistics API');
     const { id } = req.body; // Extract the id from the request body
     const db = client.db("LargeProject");
