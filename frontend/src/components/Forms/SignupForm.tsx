@@ -30,7 +30,6 @@ const SignupForm: React.FC<Props> = ({ onSwitchToLogin }) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          _id: username, // assuming _id is same as username
           username,
           password,
         }),
