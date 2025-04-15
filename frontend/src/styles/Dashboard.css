@@ -1,6 +1,7 @@
 /* Dashboard Layout */
 .dashboard-wrapper {
   background: linear-gradient(to right, #a78bfa, #93c5fd);
+  min-width: 100%;
   min-height: 100vh;
   padding: 2rem 3rem;
   position: relative;
@@ -11,9 +12,26 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
+.glass {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+  width: max-content;
+  padding: 50px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 /* Main lavender container styled like login card */
 .dashboard-container-box {
-  background: linear-gradient(135deg, #e0d7fe 0%, #ddd6fe 100%);
+  background: repeating-linear-gradient(to right, #7f7fd5, #86a8e7, #7f7fd5);
   border-radius: 2rem;
   padding: 3rem 4rem;
   width: 100%;
@@ -28,7 +46,7 @@
 /* Logout button inside container */
 .logout-button-top {
   margin-top: 60px;
-  background-color: #ef4444;
+  background-color: #ef4444de;
   color: white;
   border: none;
   padding: 0.6rem 1.1rem;
@@ -42,7 +60,7 @@
 }
 
 .logout-button-top:hover {
-  background-color: #dc2626;
+  background-color: #f73f3fde;
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
@@ -54,15 +72,15 @@
 }
 
 .dashboard-main-title {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 700;
-  color: #1f2937;
+  color: white;
   margin-bottom: 0.5rem;
 }
 
 .dashboard-subtitle {
   font-size: 1rem;
-  color: #4b5563;
+  color: white;
 }
 
 /* Subject area */
@@ -115,17 +133,17 @@
 }
 
 .math-button {
-  background-color: #3b82f6;
+  background-color: #4d81bd;
 }
 
 .math-button:hover {
-  background-color: #2563eb;
+  background-color: rgb(108, 151, 242);
 }
 
 .english-button {
-  background-color: #10b981;
+  background-color: #816bc0;
 }
 
 .english-button:hover {
-  background-color: #059669;
+  background-color: #9982d6;
 }

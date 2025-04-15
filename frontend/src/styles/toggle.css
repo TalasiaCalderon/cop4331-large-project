@@ -13,7 +13,7 @@
 
 .toggle {
   height: 100%;
-  background: linear-gradient(to right, #9fbdf0, #b6c0ed, #9fbdf0, #b6c0ed);
+  background: linear-gradient(to right, #86a8e7, #7f7fd5);
   color: #fff;
   position: relative;
   left: -100%;
@@ -32,6 +32,7 @@
   margin: 15px 0px;
   border-radius: 8px;
   background-color: #86a8e7;
+  border: 1px solid aliceblue;
   color: #fff;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -41,8 +42,8 @@
 }
 
 .toggle__btn:hover {
-  border: 1px solid #6e95d1;
-  background-color: #6e95d1;
+  background-color: #a5c2f9;
+  border: 1px solid aliceblue;
   transition: background-color 0.3s ease;
 }
 

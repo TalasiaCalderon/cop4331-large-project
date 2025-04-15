@@ -11,8 +11,8 @@
 }
 
 body {
-  background-color: #c9d6ff;
-  background: linear-gradient(to right, #7f7fd5, #86a8e7);
+  /* background-color: #c9d6ff; */
+  /* background: linear-gradient(to right, #96b3e9); */
   display: flex;
   align-items: center;
   justify-content: center;
