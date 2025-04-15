@@ -67,26 +67,34 @@ app.get('/api/user', (req, res) => {
 
 //************ BELOW IS THE REAL LOGIN API CALL *******************
 
-app.get('/api/user/login', (req, res) => {
+app.get('/api/user/login',async (req, res) => {
     console.log('Login API');
     var error = '';
     const { username, password } = req.body;
     console.log('Username: ' + username);
     console.log('Password: ' + password);
     const db = client.db('LargeProject');
-    const results = db.collection('users').find({ username: username, password: password }).toArray();
+    const results = await db.collection('users').find({ "username": username, "password": password }).toArray();
 
     var id = -1;
+    var mathQuestionsAnswered = 0;
+    var mathQuestionsCorrect = 0;
+    var englishQuestionsAnswered = 0;
+    var englishQuestionsCorrect = 0;
 
     if (results.length > 0) {
         console.log('User Found');
         console.log(results[0]);
         id = results[0]._id;
+        mathQuestionsAnswered = results[0].mathQuestionsAnswered;
+        mathQuestionsCorrect = results[0].mathQuestionsAnswered;
+        englishQuestionsAnswered = results[0].mathQuestionsAnswered;
+        englishQuestionsCorrect = results[0].mathQuestionsAnswered;
     } else {
         console.log('User Not Found');
         error = 'User not found';
     }
-    var ret = { id: id, error: '' };
+    var ret = { id: id, mathQuestionsAnswered: mathQuestionsAnswered, mathQuestionsCorrect: mathQuestionsCorrect, englishQuestionsAnswered: englishQuestionsAnswered, englishQuestionsCorrect: englishQuestionsCorrect, error: '' };
 
     res.status(200).json(ret);
 });
@@ -94,11 +102,11 @@ app.get('/api/user/login', (req, res) => {
 
 
 // get the user question stats
-app.get('/api/user/statistics', (req, res) => {
+app.get('/api/user/statistics', async (req, res) => {
     console.log('Get User Statistics API');
     const { id } = req.body;
     const db = client.db("LargeProject");
-    const results = db.collection('users').find({ _id: id }).toArray();
+    const results = await db.collection('users').find({ _id: id }).toArray();
 
     var mathQuestionsAnswered = 0;
     var mathQuestionsCorrect = 0;
@@ -117,14 +125,14 @@ app.get('/api/user/statistics', (req, res) => {
 });
 
 // update the user question stats
-app.post('/api/user/updateStatistics', (req, res) => {
+app.post('/api/user/updateStatistics', async (req, res) => {
     console.log('Update User Statistics API');
     var error = '';
     const { id, mathQuestionsAnswered, mathQuestionsCorrect, englishQuestionsAnswered, englishQuestionsCorrect } = req.body;
     const db = client.db('LargeProject');
 
     try {
-        db.collection('users').updateOne({ _id: id }, { $set: { mathQuestionsAnswered: mathQuestionsAnswered, mathQuestionsCorrect: mathQuestionsCorrect, englishQuestionsAnswered: englishQuestionsAnswered, englishQuestionsCorrect: englishQuestionsCorrect } });
+        await db.collection('users').updateOne({ _id: id }, { $set: { mathQuestionsAnswered: mathQuestionsAnswered, mathQuestionsCorrect: mathQuestionsCorrect, englishQuestionsAnswered: englishQuestionsAnswered, englishQuestionsCorrect: englishQuestionsCorrect } });
     } catch (e) {
         error = e;
     }
@@ -134,14 +142,14 @@ app.post('/api/user/updateStatistics', (req, res) => {
 });
 
 // add a new user
-app.post('/api/user/addUser', (req, res) => {
+app.post('/api/user/addUser', async (req, res) => {
     console.log('Add User API');
     const error = '';
-    const { _id, username, password } = req.body;
+    const { username, password } = req.body;
     const db = client.db('LargeProject');
 
     try {
-        db.collection('users').insertOne({ _id: _id, username: username, password: password, mathQuestionsAnswered: 0, mathQuestionsCorrect: 0, englishQuestionsAnswered: 0, englishQuestionsCorrect: 0 });
+        await db.collection('users').insertOne({ username: username, password: password, mathQuestionsAnswered: 0, mathQuestionsCorrect: 0, englishQuestionsAnswered: 0, englishQuestionsCorrect: 0 });
     }
     catch (e) {
         error = e;
@@ -152,14 +160,14 @@ app.post('/api/user/addUser', (req, res) => {
 });
 
 // deletes a user
-app.delete('/api/user/deleteUser', (req, res) => {
+app.delete('/api/user/deleteUser', async (req, res) => {
     console.log('Delete User API');
     const error = '';
-    const { _id } = req.body;
+    const { username, password } = req.body;
     const db = client.db('LargeProject');
 
     try {
-        db.collection('users').deleteOne({ _id: _id });
+        await db.collection('users').deleteOne({ username: username, password: password });
     }
     catch (e) {
         error = e;
@@ -190,7 +198,7 @@ app.get('/api/math/question', async (req, res) => {
         question = results[0].question;
         answer = results[0].answer;
     }
-    res.status(200).json({ question: question, answer: answer });
+    res.status(200).json({ "question": question, "answer": answer });
 });
 
 
@@ -230,7 +238,7 @@ app.get('/api/english/question', async (req, res) => {
     res.status(200).json({ word: question, definition: answer });
 });
 
-// get 4 random answers
+// get 3 random answers
 app.get('/api/english/answers', async (req, res) => {
     console.log('English Answers API');
     const db = client.db('LargeProject');
