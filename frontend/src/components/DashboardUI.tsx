@@ -134,7 +134,7 @@ export function RoundCalculate(props: SVGProps<SVGSVGElement>) {
 function DashboardUI() {
 
     const navigate = useNavigate();
-    const location = useLocation(); // 👈 detects route change
+    const location = useLocation();
 
     const [username, setUsername] = useState("Default")
     const [mathStats, setMathStats] = useState({ correct: 0, answered: 0 });
@@ -152,7 +152,7 @@ function DashboardUI() {
                 })
                     .then((res) => res.json())
                     .then((data) => {
-                        setUsername(data.username);
+                        setUsername(ud.username);
                         setMathStats({
                             correct: data.mathQuestionsCorrect,
                             answered: data.mathQuestionsAnswered

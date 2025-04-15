@@ -70,16 +70,28 @@ const EnglishQuiz: React.FC = () => {
 
   const updateUserStats = async (correct: number, total: number) => {
     try {
-      const res = await axios.post('/api/user/statistics', { id: userId });
-      const data = res.data;
-
+      const userData = JSON.parse(localStorage.getItem('user_data') || '{}');
+  
+      const updatedEnglishQuestionsAnswered = (userData.englishQuestionsAnswered || 0) + total;
+      const updatedEnglishQuestionsCorrect = (userData.englishQuestionsCorrect || 0) + correct;
+  
       await axios.post('/api/user/updateStatistics', {
         id: userId,
-        mathQuestionsAnswered: data.mathQuestionsAnswered,
-        mathQuestionsCorrect: data.mathQuestionsCorrect,
-        englishQuestionsAnswered: data.englishQuestionsAnswered + total,
-        englishQuestionsCorrect: data.englishQuestionsCorrect + correct,
+        mathQuestionsAnswered: userData.mathQuestionsAnswered || 0,
+        mathQuestionsCorrect: userData.mathQuestionsCorrect || 0,
+        englishQuestionsAnswered: updatedEnglishQuestionsAnswered,
+        englishQuestionsCorrect: updatedEnglishQuestionsCorrect,
       });
+  
+      // Update localStorage to keep stats in sync
+      localStorage.setItem(
+        'user_data',
+        JSON.stringify({
+          ...userData,
+          englishQuestionsAnswered: updatedEnglishQuestionsAnswered,
+          englishQuestionsCorrect: updatedEnglishQuestionsCorrect,
+        })
+      );
     } catch (err) {
       console.error('Failed to update user stats', err);
     }

@@ -10,6 +10,11 @@ type LoginRequest = {
 
 type LoginResponse = {
   id: string | number;
+  username: string;
+  mathQuestionsAnswered: number;
+  mathQuestionsCorrect: number;
+  englishQuestionsAnswered: number;
+  englishQuestionsCorrect: number;
   error: string;
 };
 
@@ -41,6 +46,11 @@ const LoginForm: React.FC = () => {
       if (data.id && typeof data.id === "string" && isNaN(Number(data.id))) {
         const user = {
           id: data.id,
+          username: username,
+          mathQuestionsAnswered: data.mathQuestionsAnswered,
+          mathQuestionsCorrect: data.mathQuestionsCorrect,
+          englishQuestionsAnswered: data.englishQuestionsAnswered,
+          englishQuestionsCorrect: data.englishQuestionsCorrect,
         };
   
         localStorage.setItem("user_data", JSON.stringify(user));
