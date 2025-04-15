@@ -7,68 +7,34 @@ const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb+srv://ma270662:nWOkmhYD79bIygmR@cop4331incass.pj3qn3w.mongodb.net/LargeProject?retryWrites=true&w=majority&appName=COP4331InCass';
 const client = new MongoClient(url);
-client.connect((err) => {
-    if (err) {
-        console.error('Failed to connect to the database:', err);
-    } else {
-        console.log('Successfully connected to the database');
-    }
-});
 
+// Fix: Use async/await for consistent connection handling
+async function connectToDatabase() {
+  try {
+    await client.connect();
+    console.log('Successfully connected to the database');
+  } catch (err) {
+    console.error('Failed to connect to the database:', err);
+    process.exit(1); // Exit if we can't connect to the database
+  }
+}
+connectToDatabase();
 
 app.use(cors());
 app.use(bodyParser.json());
-
-// const user = require('./backend/user_api.js');
-// const math = require('./backend/math_question_api.js');
-// const english = require('./backend/english_question_api.js');
-
-
 
 // use the api is running
 app.get('/api/', (req, res) => {
     res.send('API is running');
 });
 
-
-// users schema: {
-// _id (auto-generated string)
-// username (string)
-// password (string)
-// mathQuestionsAnswered (int)
-// mathQuestionsCorrect (int)
-// englishQuestionsAnswered (int)
-// englishQuestionsCorrect (int)
-// }
-
-// mathQuestions schema {
-// _id (auto-generated string)
-// qid (int 32)
-// question (string)
-// answer (string)
-// }
-
-// englishQuestions schema: {
-// _Id (auto-generated string)
-// wordId (int 32)
-// word (string)
-// definition (string)
-// }
-
-
-
-
 // confirm the user api is running
 app.get('/api/user', (req, res) => {
     res.send('User API');
 });
 
-// check if the user exists
-// and return the user id
-
-//************ BELOW IS THE REAL LOGIN API CALL *******************
-
-app.post('/api/user/login',async (req, res) => {
+// check if the user exists and return the user id
+app.post('/api/user/login', async (req, res) => {
     console.log('Login API');
     var error = '';
     const { username, password } = req.body;
@@ -84,20 +50,27 @@ app.post('/api/user/login',async (req, res) => {
     if (results.length > 0) {
         console.log('User Found');
         id = results[0]._id;
+        // Fix: Correctly assign values from database results
         mathQuestionsAnswered = results[0].mathQuestionsAnswered;
-        mathQuestionsCorrect = results[0].mathQuestionsAnswered;
-        englishQuestionsAnswered = results[0].mathQuestionsAnswered;
-        englishQuestionsCorrect = results[0].mathQuestionsAnswered;
+        mathQuestionsCorrect = results[0].mathQuestionsCorrect; // Fixed: was using mathQuestionsAnswered
+        englishQuestionsAnswered = results[0].englishQuestionsAnswered; // Fixed: was using mathQuestionsAnswered
+        englishQuestionsCorrect = results[0].englishQuestionsCorrect; // Fixed: was using mathQuestionsAnswered
     } else {
         console.log('User Not Found');
         error = 'User not found';
     }
-    var ret = { id: id, mathQuestionsAnswered: mathQuestionsAnswered, mathQuestionsCorrect: mathQuestionsCorrect, englishQuestionsAnswered: englishQuestionsAnswered, englishQuestionsCorrect: englishQuestionsCorrect, error: '' };
+    
+    var ret = { 
+        id: id, 
+        mathQuestionsAnswered: mathQuestionsAnswered, 
+        mathQuestionsCorrect: mathQuestionsCorrect, 
+        englishQuestionsAnswered: englishQuestionsAnswered, 
+        englishQuestionsCorrect: englishQuestionsCorrect, 
+        error: error // Fix: Include the error in the response
+    };
 
     res.status(200).json(ret);
 });
-
-
 
 // get the user question stats
 app.post('/api/user/statistics', async (req, res) => {
@@ -128,13 +101,20 @@ app.post('/api/user/statistics', async (req, res) => {
             mathQuestionsAnswered: mathQuestionsAnswered,
             mathQuestionsCorrect: mathQuestionsCorrect,
             englishQuestionsAnswered: englishQuestionsAnswered,
-            englishQuestionsCorrect: englishQuestionsCorrect
+            englishQuestionsCorrect: englishQuestionsCorrect,
+            error: '' // Fix: Include an error field for consistency
         };
 
         res.status(200).json(ret);
     } catch (error) {
         console.error('Error fetching user statistics:', error);
-        res.status(500).json({ error: 'Failed to fetch user statistics' });
+        res.status(200).json({ // Fix: Keep consistent 200 status with error message
+            mathQuestionsAnswered: 0,
+            mathQuestionsCorrect: 0,
+            englishQuestionsAnswered: 0,
+            englishQuestionsCorrect: 0,
+            error: 'Failed to fetch user statistics'
+        });
     }
 });
 
@@ -150,7 +130,7 @@ app.post('/api/user/updateStatistics', async (req, res) => {
         const objectId = new ObjectId(id);
 
         // Update the user's statistics in the database
-        await db.collection('users').updateOne(
+        const result = await db.collection('users').updateOne(
             { _id: objectId }, // Use the ObjectId for the query
             {
                 $set: {
@@ -161,31 +141,56 @@ app.post('/api/user/updateStatistics', async (req, res) => {
                 }
             }
         );
+        
+        // Fix: Check if the update was successful
+        if (result.matchedCount === 0) {
+            error = 'User not found';
+        }
     } catch (e) {
         console.error('Error updating user statistics:', e);
         error = e.message;
     }
 
-    var ret = { error: error };
+    var ret = { 
+        error: error,
+        // Fix: Return updated statistics for confirmation
+        mathQuestionsAnswered: mathQuestionsAnswered,
+        mathQuestionsCorrect: mathQuestionsCorrect,
+        englishQuestionsAnswered: englishQuestionsAnswered,
+        englishQuestionsCorrect: englishQuestionsCorrect
+    };
+    
     res.status(200).json(ret);
 });
 
 // add a new user
 app.post('/api/user/addUser', async (req, res) => {
     console.log('Add User API');
-    const error = '';
+    var error = ''; // Fix: Using var instead of const to allow reassignment
     const { username, password } = req.body;
     const db = client.db('LargeProject');
 
     try {
-        await db.collection('users').insertOne({ username: username, password: password, mathQuestionsAnswered: 0, mathQuestionsCorrect: 0, englishQuestionsAnswered: 0, englishQuestionsCorrect: 0 });
+        // Fix: Check if username already exists
+        const existingUser = await db.collection('users').findOne({ username: username });
+        if (existingUser) {
+            error = 'Username already exists';
+        } else {
+            await db.collection('users').insertOne({ 
+                username: username, 
+                password: password, 
+                mathQuestionsAnswered: 0, 
+                mathQuestionsCorrect: 0, 
+                englishQuestionsAnswered: 0, 
+                englishQuestionsCorrect: 0 
+            });
+        }
     }
     catch (e) {
-        error = e;
+        error = e.message;
     }
     var ret = { error: error };
     res.status(200).json(ret);
-
 });
 
 // deletes a user
@@ -197,7 +202,6 @@ app.delete('/api/user/deleteUser', async (req, res) => {
 
     try {
         const objectId = new ObjectId(id);
-
         const result = await db.collection('users').deleteOne({ _id: objectId });
             
         if (result.deletedCount === 0) {
@@ -205,15 +209,11 @@ app.delete('/api/user/deleteUser', async (req, res) => {
         }
     }
     catch (e) {
-        error = e;
+        error = e.message;
     }
     var ret = { error: error };
     res.status(200).json(ret);
-
 });
-
-
-
 
 // confirm the math question api is running
 app.get('/api/math', async (req, res) => {
@@ -226,7 +226,6 @@ app.get('/api/math/question', async (req, res) => {
     const db = client.db('LargeProject');
     const results = await db.collection('mathQuestions').aggregate([{ $sample: { size: 1 } }]).toArray();
 
-
     var question = 'No Question Found';
     var answer = 'No Answer Found';
     if (results.length > 0) {
@@ -235,7 +234,6 @@ app.get('/api/math/question', async (req, res) => {
     }
     res.status(200).json({ "question": question, "answer": answer });
 });
-
 
 //get 4 random answers
 app.get('/api/math/answers', async (req, res) => {
@@ -249,10 +247,6 @@ app.get('/api/math/answers', async (req, res) => {
     }
     res.status(200).json({ answers: answers });
 });
-
-
-
-
 
 app.get('/api/english/', (req, res) => {
     res.send('English Question API');
@@ -286,9 +280,6 @@ app.get('/api/english/answers', async (req, res) => {
     res.status(200).json({ answers: answers });
 });
 
-
-
 app.listen(5000, () => {
     console.log('Server listening on port 5000');
 });
-

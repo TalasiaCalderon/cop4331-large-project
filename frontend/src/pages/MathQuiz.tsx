@@ -79,16 +79,22 @@ const MathQuiz: React.FC = () => {
     }
   };
 
+  const handleBackToDashboard = () => {
+    navigate('/dashboard');
+  };
+
   const shuffleArray = (arr: string[]) => {
     return [...arr].sort(() => Math.random() - 0.5);
   };
 
   if (quizFinished) {
     return (
-      <div className="quiz-finished">
+      <div className="quiz-container">
         <h2>Quiz Complete!</h2>
         <p>You scored {score} out of {maxQuestions}.</p>
-        <button onClick={() => navigate('/dashboard')}>Back to Dashboard</button>
+        <button className="next-button" onClick={handleBackToDashboard}>
+          Back to Dashboard
+        </button>
       </div>
     );
   }
@@ -111,13 +117,23 @@ const MathQuiz: React.FC = () => {
               </button>
             ))}
           </div>
-          <button
-            className="next-button"
-            onClick={handleNext}
-            disabled={!selectedAnswer}
-          >
-            {questionCount + 1 === maxQuestions ? 'Finish' : 'Next'}
-          </button>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
+            <button
+              className="next-button"
+              onClick={handleNext}
+              disabled={!selectedAnswer}
+            >
+              {questionCount + 1 === maxQuestions ? 'Finish' : 'Next'}
+            </button>
+
+            <button
+              className="next-button"
+              onClick={handleBackToDashboard}
+            >
+              Back to Dashboard
+            </button>
+          </div>
         </>
       ) : (
         <p>Failed to load question.</p>
