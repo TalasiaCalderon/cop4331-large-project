@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SplashPage from './pages/SplashPage';
 import DashboardPage from './pages/DashboardPage';
+import EnglishQuiz from './pages/EnglishQuiz';
+import MathQuiz from './pages/MathQuiz';
 import './App.css';
 
 function App() {
@@ -9,7 +11,9 @@ function App() {
       <Routes>
         <Route path="/" element={<SplashPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
-      </Routes>
+	<Route path="/english" element={<EnglishQuiz />} />
+        <Route path="/math" element={<MathQuiz />} />
+	</Routes>
     </Router>
   );
 }

@@ -1,10 +1,9 @@
-import PageTitle from '../components/PageTitle';
+import React from 'react';
 import DashboardUI from '../components/DashboardUI';
 
 const DashboardPage = () => {
     return (
         <div>
-            <PageTitle />
             <DashboardUI />
         </div>
     );
