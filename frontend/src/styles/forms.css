@@ -123,3 +123,8 @@
   text-align: center;
   margin: 0 10px;
 }
+
+.form__error-status {
+  color: red;
+  font-weight: bold;
+}
