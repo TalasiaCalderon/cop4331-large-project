@@ -28,8 +28,8 @@ const EnglishQuiz: React.FC = () => {
   const fetchQuestion = async () => {
     setIsLoading(true);
     try {
-      const qRes = await axios.get('/api/english/englishQuestion');
-      const aRes = await axios.get('/api/english/englishAnswers');
+      const qRes = await axios.get('/api/english/question');
+      const aRes = await axios.get('/api/english/answers');
 
       let answers = aRes.data.answers;
       if (!answers.includes(qRes.data.answer)) {
