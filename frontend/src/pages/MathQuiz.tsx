@@ -75,7 +75,7 @@ const MathQuiz: React.FC = () => {
       const updatedMathQuestionsCorrect = (userData.mathQuestionsCorrect || 0) + correct;
   
       await axios.post('/api/user/updateStatistics', {
-        id: userData.id,
+        id: userId,
         englishQuestionsAnswered: userData.englishQuestionsAnswered || 0,
         englishQuestionsCorrect: userData.englishQuestionsCorrect || 0,
         mathQuestionsAnswered: updatedMathQuestionsAnswered,
@@ -87,8 +87,8 @@ const MathQuiz: React.FC = () => {
         'user_data',
         JSON.stringify({
           ...userData,
-          englishQuestionsAnswered: updatedMathQuestionsAnswered,
-          englishQuestionsCorrect: updatedMathQuestionsCorrect,
+          mathQuestionsAnswered: updatedMathQuestionsAnswered,
+          mathQuestionsCorrect: updatedMathQuestionsCorrect,
         })
       );
     } catch (err) {
