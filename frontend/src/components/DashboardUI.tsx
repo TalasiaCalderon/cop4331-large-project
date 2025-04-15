@@ -202,7 +202,7 @@ function DashboardUI() {
                 <div className="dashboard-card-container">
                     <div className="dashboard-box">
                         <h2 className="dashboard-title"><RoundCalculate />Math</h2>
-                        <p className="dashboard-score">Score: None</p>
+                        <p className="dashboard-score">Correct: {mathStats.correct} / {mathStats.answered}</p>
                         <button className="math-button" onClick={() => goToPuzzles('math')}>
                             Start Math Game
                         </button>
@@ -210,7 +210,7 @@ function DashboardUI() {
 
                     <div className="dashboard-box">
                         <h2 className="dashboard-title"><Books/>English</h2>
-                        <p className="dashboard-score">Score: None</p>
+                        <p className="dashboard-score"> Correct: {englishStats.correct} / {englishStats.answered}</p>
                         <button className="english-button" onClick={() => goToPuzzles('english')}>
                             Start English Game
                         </button>
