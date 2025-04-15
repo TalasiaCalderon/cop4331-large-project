@@ -76,7 +76,7 @@ const EnglishQuiz: React.FC = () => {
       const updatedEnglishQuestionsCorrect = (userData.englishQuestionsCorrect || 0) + correct;
   
       await axios.post('/api/user/updateStatistics', {
-        id: userId,
+        id: userData.id,
         mathQuestionsAnswered: userData.mathQuestionsAnswered || 0,
         mathQuestionsCorrect: userData.mathQuestionsCorrect || 0,
         englishQuestionsAnswered: updatedEnglishQuestionsAnswered,
